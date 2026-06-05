@@ -1,209 +1,53 @@
-# N-Gram Language Model with Smoothing Techniques
+## Hate Speech Analysis Project
 
-This project implements and evaluates statistical N-Gram language models using the IMDB Movie Review Dataset. The notebook explores different smoothing techniques and compares their performance using perplexity and cross-validation.
+This project focuses on analyzing a Hate Speech dataset to identify common themes, preprocess text data, and visualize key insights.
 
-## Project Overview
+### Project Goal
 
-The notebook covers the following:
+The primary objective is to load a raw text dataset, perform a series of text preprocessing steps (cleaning, tokenization, stemming, lemmatization, stop-word removal), and then visualize the characteristics of the cleaned text to gain insights into the dataset's content.
 
-* Data loading and preprocessing
-* Tokenization and sentence preparation
-* N-Gram generation and frequency counting
-* Maximum Likelihood Estimation (MLE)
-* Smoothing techniques:
+### Setup and Installation
 
-  * Laplace (Add-One) Smoothing
-  * Good-Turing Discounting
-  * Kneser-Ney Smoothing
-* Perplexity evaluation
-* K-Fold Cross-Validation
-* Data visualization and performance analysis
-
-The project demonstrates how probabilistic language models work and how smoothing improves predictions for unseen word sequences.
-
----
-
-# Technologies Used
-
-* Python
-* Pandas
-* NumPy
-* Matplotlib
-* NLTK
-* KaggleHub
-* Jupyter Notebook
-
----
-
-# Dataset
-
-The project uses the **IMDB Movie Review Dataset** for training and evaluation.
-
-Dataset features:
-
-* Movie review text
-* Sentiment labels
-* Large vocabulary suitable for language modeling
-
-Example dataset path used in the notebook:
-
-```python
-C:/Users/USER/Desktop/NLP/IMDB Dataset.csv
-```
-
-
----
-
-# Project Structure
+To run this notebook, you'll need to install the following Python libraries:
 
 ```bash
-Assignment_1.ipynb
+!pip install textblob wordcloud
 ```
 
-The notebook is divided into the following sections:
+Additionally, several NLTK data packages are required. These will be downloaded automatically when the notebook runs:
 
-## Step 1: Data Preparation
+*   `punkt_tab`
+*   `stopwords`
+*   `wordnet`
 
-* Load dataset
-* Clean and preprocess text
-* Tokenize sentences
-* Train/Test split
+### Data Loading and Preprocessing
 
-## Step 2: Implement N-Gram Models
+1.  **Data Loading**: The project loads a CSV file (`OmbuiHSRaw.csv`) into a pandas DataFrame.
+2.  **Duplicate Removal**: Duplicate entries based on the `tweet` column are identified and removed to ensure data integrity and prevent bias in analysis.
+3.  **Text Preprocessing Pipeline**: A custom preprocessing function (`class_style_preprocessing`) is applied to the `tweet` column, which performs the following steps:
+    *   Removes HTML tags and non-alphabetic characters.
+    *   Handles whitespace and extra spaces.
+    *   Converts text to lowercase (normalization).
+    *   Tokenizes the text into individual words.
+    *   Removes common English stopwords.
+    *   Applies lemmatization and Snowball stemming to reduce words to their root forms, consolidating vocabulary.
+    
+    *(Note: A resource-intensive spelling correction step using `TextBlob().correct()` was temporarily commented out for faster execution on large datasets.)*
 
-* Generate unigrams, bigrams, trigrams, and 4-grams
-* Compute frequency counts
-* Calculate MLE probabilities
+### Visualizations
 
-## Step 3: Apply Smoothing Techniques
+Two main visualizations are generated to explore the preprocessed text:
 
-* Laplace smoothing
-* Good-Turing smoothing
-* Kneser-Ney smoothing
+1.  **WordCloud**: A visual representation of the most frequent words in the cleaned text, where the size of each word indicates its frequency.
+2.  **Word Frequency Histogram**: A bar plot showing the top 20 most frequent words and their counts, providing a quantitative view of prominent terms.
+3.  **Word Count Drift (KDE Plot)**: A Kernel Density Estimate plot illustrating the distribution of word counts before and after preprocessing, demonstrating the structural shift in text density.
 
-## Step 4: Evaluate Model Performance
+### Summary of Insights Gained
 
-* Perplexity calculation
-* K-Fold Cross-Validation
+1.  **Noise Extraction & Vocabulary Pruning**: The preprocessing successfully removed HTML tags, special characters, and extraneous whitespace, leading to a consolidated and cleaner vocabulary.
+2.  **Structural Consolidation via Normalization**: Lowercasing, stemming, and lemmatization effectively reduced inflectional variations, ensuring that words with similar meanings are treated as a single feature, which is crucial for downstream modeling.
+3.  **High-Frequency Term Profiling**: By eliminating common stopwords, the visualizations effectively highlighted the contextual root vocabulary of the dataset. This helps in quickly identifying actionable markers and potential abusive patterns, especially relevant in hate speech analysis.
 
-## Step 5: Visualization and Analysis
-
-* Perplexity comparison plots
-* Bar chart comparisons
-* Frequency distribution analysis
-* Final analysis report
-
----
-
-# Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/your-username/your-repository-name.git
-cd your-repository-name
-```
-
-Install required dependencies:
-
-```bash
-pip install nltk numpy pandas matplotlib kagglehub
-```
-
----
-
-# Running the Notebook
-
-Open Jupyter Notebook:
-
-```bash
-jupyter notebook
-```
-
-Then open:
-
-```bash
-Assignment_1.ipynb
-```
-
-Run all cells sequentially.
-
----
-
-# Key Concepts Covered
-
-## N-Gram Language Models
-
-An N-Gram model predicts the next word based on the previous (n-1) words.
-
-Examples:
-
-* Unigram → single words
-* Bigram → pairs of words
-* Trigram → sequences of three words
-
----
-
-## Smoothing Techniques
-
-### 1. Laplace Smoothing
-
-Adds one to all counts to avoid zero probabilities.
-
-### 2. Good-Turing Discounting
-
-Adjusts probabilities for unseen events based on frequency of frequencies.
-
-### 3. Kneser-Ney Smoothing
-
-A more advanced smoothing method that improves probability estimation using continuation probabilities.
-
----
-
-# Evaluation Metric
-
-## Perplexity
-
-Perplexity measures how well a language model predicts a sequence of words.
-
-Lower perplexity indicates better model performance.
-
----
-
-# Visualizations
-
-The notebook generates:
-
-* Perplexity vs N-Gram size plots
-* Smoothing method comparison charts
-* N-Gram frequency distribution graphs
-
-These visualizations help compare model effectiveness and analyze language patterns.
-
----
-
-# Learning Outcomes
-
-
-* How statistical language models work
-* The importance of smoothing techniques
-* How to evaluate NLP models using perplexity
-* How different N-Gram orders affect performance
-* Practical implementation of NLP concepts in Python
-
----
-
-# Future Improvements
-
-Possible extensions for this project:
-
-* Implement neural language models
-* Add stemming and lemmatization
-* Use larger datasets
-* Compare with transformer-based models
-* Optimize memory usage for higher-order N-Grams
-
----
 
 
 ---
